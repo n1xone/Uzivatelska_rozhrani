@@ -1,0 +1,15 @@
+{
+  "name": "unibudget-pro-electron",
+  "version": "2.0.0",
+  "description": "URO Bootstrap projekt jako web i desktop aplikace v Electronu",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "author": "Nikita Chervinskyi CHE0086",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^30.5.1"
+  }
+}

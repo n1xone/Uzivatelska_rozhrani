@@ -1,0 +1,42 @@
+
+:root{
+  --bg:#f3f6fb;--card:#ffffff;--muted:#64748b;--line:#e2e8f0;--brand:#2563eb;--brand2:#7c3aed;--shadow:0 18px 60px rgba(15,23,42,.09)
+}
+[data-bs-theme=dark]{
+  --bg:#0b1220;--card:#111827;--muted:#94a3b8;--line:#243044;--brand:#60a5fa;--brand2:#a78bfa;--shadow:0 18px 60px rgba(0,0,0,.35)
+}
+body{
+  background:
+    radial-gradient(circle at 10% 10%, rgba(37,99,235,.16), transparent 32rem),
+    radial-gradient(circle at 85% 0%, rgba(124,58,237,.16), transparent 28rem),
+    var(--bg);
+  min-height:100vh;
+}
+.navbar-glass{backdrop-filter:blur(18px);background:rgba(255,255,255,.74);border-bottom:1px solid var(--line)}
+[data-bs-theme=dark] .navbar-glass{background:rgba(17,24,39,.76)}
+.logo-badge{width:38px;height:38px;border-radius:14px;display:inline-grid;place-items:center;color:white;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 10px 30px rgba(37,99,235,.35)}
+.hero-card{display:flex;justify-content:space-between;gap:2rem;align-items:center;padding:2rem;border-radius:30px;color:white;background:linear-gradient(135deg,#2563eb,#7c3aed 56%,#ec4899);box-shadow:var(--shadow);position:relative;overflow:hidden;animation:rise .55s ease both}
+.hero-card:after{content:"";position:absolute;inset:-80px -120px auto auto;width:300px;height:300px;background:rgba(255,255,255,.18);border-radius:999px}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;z-index:1}
+.eyebrow{letter-spacing:.12em;text-transform:uppercase;font-size:.76rem;font-weight:800;color:var(--brand);margin-bottom:.25rem}
+.hero-card .eyebrow{color:rgba(255,255,255,.82)}
+.page{display:none}.active-page{display:block}
+.active-page{animation:rise .35s ease both}
+.app-card,.stat-tile{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:1.15rem}
+.stat-tile{transition:.22s transform,.22s box-shadow}.stat-tile:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(37,99,235,.16)}
+.stat-tile p{color:var(--muted);margin:0 0 .35rem}.stat-tile .value{font-size:1.75rem;font-weight:850}.stat-tile .icon{width:46px;height:46px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(37,99,235,.13),rgba(124,58,237,.14));color:var(--brand)}
+.card-header-clean,.section-title{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}
+.card-header-clean h2,.section-title h1{font-size:1.25rem;font-weight:850;margin:0}.card-header-clean p,.section-title p{color:var(--muted);margin:0}
+.section-title{margin-bottom:1.1rem}
+.soft-input,.form-control,.form-select{border-radius:15px;border-color:var(--line)}
+.table{--bs-table-bg:transparent}.table thead th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}.table tbody tr{transition:.15s}.table tbody tr:hover{transform:scale(1.005)}
+.badge-soft{border-radius:999px;padding:.45rem .7rem;font-weight:750}.amount-pos{color:#16a34a!important;font-weight:850}.amount-neg{color:#ef4444!important;font-weight:850}
+.action-btn{border:0;border-radius:12px;width:34px;height:34px;display:inline-grid;place-items:center;transition:.16s}.action-btn:hover{transform:translateY(-2px) scale(1.04)}
+.progress{height:.72rem;border-radius:999px;background:rgba(148,163,184,.18)}.progress-bar{border-radius:999px}
+.goal-card{min-height:190px;transition:.2s}.goal-card:hover{transform:translateY(-5px)}
+.avatar{width:90px;height:90px;border-radius:30px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:white;display:grid;place-items:center;font-weight:900;font-size:2rem;box-shadow:0 22px 50px rgba(37,99,235,.35)}
+.empty-state{text-align:center;color:var(--muted);padding:2rem!important}
+.modal-content{border-radius:24px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.toast{border-radius:18px}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(max-width:768px){.hero-card,.section-title,.card-header-clean{flex-direction:column;align-items:flex-start}.hero-actions .btn{width:100%}}

@@ -1,0 +1,111 @@
+<!-- npm start -->>
+<!doctype html>
+<html lang="cs" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UniBudget Pro | Bootstrap projekt</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-glass sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#">
+        <span class="logo-badge"><i class="bi bi-stars"></i></span>
+        <span>UniBudget Pro</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="topNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+          <li class="nav-item"><a class="nav-link active" data-page="dashboard" href="#dashboard"><i class="bi bi-grid-1x2"></i> Přehled</a></li>
+          <li class="nav-item"><a class="nav-link" data-page="transactions" href="#transactions"><i class="bi bi-wallet2"></i> Transakce</a></li>
+          <li class="nav-item"><a class="nav-link" data-page="students" href="#students"><i class="bi bi-mortarboard"></i> Studenti</a></li>
+          <li class="nav-item"><a class="nav-link" data-page="goals" href="#goals"><i class="bi bi-bullseye"></i> Cíle</a></li>
+          <li class="nav-item"><a class="nav-link" data-page="analytics" href="#analytics"><i class="bi bi-bar-chart-line"></i> Grafy</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <select id="bankSelect" class="form-select form-select-sm soft-input" aria-label="Výběr banky"></select>
+          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#aboutModal"><i class="bi bi-person-badge"></i> O autorovi</button>
+          <button id="themeBtn" class="btn btn-sm btn-primary"><i class="bi bi-moon-stars"></i></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid px-4 py-4">
+    <section id="dashboard" class="page active-page">
+      <div class="hero-card mb-4">
+        <div>
+          <p class="eyebrow mb-2">Bootstrap projekt • URO •</p>
+          <h1 class="display-6 fw-bold mb-2">Finanční a studentský dashboard v jednom</h1>
+          <p class="lead mb-0">Spojuje Smart Budget z Pythonu a Student Manager z Qt do jedné moderní webové aplikace. Projekt lze spustit také jako desktop aplikaci přes Electron.</p>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-light btn-lg" id="quickAddTxn"><i class="bi bi-plus-circle"></i> Přidat transakci</button>
+          <button class="btn btn-outline-light btn-lg" id="quickAddStudent"><i class="bi bi-person-plus"></i> Přidat studenta</button>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4" id="summaryCards"></div>
+
+      <div class="row g-4">
+        <div class="col-12 col-xl-8">
+          <div class="app-card h-100">
+            <div class="card-header-clean">
+              <div><h2>Poslední pohyby</h2><p>Rychlý náhled transakcí a stavů účtu</p></div>
+              <span class="badge text-bg-primary-subtle text-primary" id="dashboardBankBadge"></span>
+            </div>
+            <div class="table-responsive"><table class="table align-middle table-hover mb-0"><thead><tr><th>Datum</th><th>Popis</th><th>Kategorie</th><th class="text-end">Částka</th></tr></thead><tbody id="recentBody"></tbody></table></div>
+          </div>
+        </div>
+        <div class="col-12 col-xl-4">
+          <div class="app-card h-100">
+            <div class="card-header-clean"><div><h2>Výdaje podle kategorií</h2><p>Automatická statistika z tabulky</p></div></div>
+            <div id="categoryStats" class="vstack gap-3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="transactions" class="page">
+      <div class="section-title"><div><p class="eyebrow">CRUD proces</p><h1>Správa transakcí</h1><p>Přidání, editace, smazání, filtrování a export dat.</p></div><button class="btn btn-primary" data-action="add-transaction"><i class="bi bi-plus-lg"></i> Nová transakce</button></div>
+      <div class="app-card mb-3"><div class="row g-3"><div class="col-md-5"><input id="txnSearch" class="form-control soft-input" placeholder="🔍 Hledat popis nebo kategorii"></div><div class="col-md-3"><select id="categoryFilter" class="form-select soft-input"><option value="All">Všechny kategorie</option></select></div><div class="col-md-2"><select id="typeFilter" class="form-select soft-input"><option value="All">Vše</option><option value="income">Příjmy</option><option value="expense">Výdaje</option></select></div><div class="col-md-2 d-grid"><button id="exportCsv" class="btn btn-outline-secondary"><i class="bi bi-download"></i> CSV</button></div></div></div>
+      <div class="app-card"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Datum</th><th>Popis</th><th>Kategorie</th><th class="text-end">Částka</th><th class="text-end">Akce</th></tr></thead><tbody id="txnBody"></tbody></table></div></div>
+    </section>
+
+    <section id="students" class="page">
+      <div class="section-title"><div><p class="eyebrow">Qt část projektu</p><h1>Students Database</h1><p>Tabulka studentů s formulářem, validací a stavem studia.</p></div><button class="btn btn-primary" data-action="add-student"><i class="bi bi-person-plus"></i> Nový student</button></div>
+      <div class="row g-3 mb-3" id="studentCards"></div>
+      <div class="app-card mb-3"><div class="row g-3"><div class="col-md-6"><input id="studentSearch" class="form-control soft-input" placeholder="🔍 Hledat jméno, fakultu nebo e-mail"></div><div class="col-md-3"><select id="statusFilter" class="form-select soft-input"><option value="All">All statuses</option><option>Active</option><option>Graduated</option><option>Suspended</option></select></div><div class="col-md-3 d-grid"><button id="resetStudents" class="btn btn-outline-secondary"><i class="bi bi-arrow-counterclockwise"></i> Ukázková data</button></div></div></div>
+      <div class="app-card"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>ID</th><th>Student</th><th>Faculty</th><th>Specialty</th><th>GPA</th><th>Status</th><th class="text-end">Akce</th></tr></thead><tbody id="studentBody"></tbody></table></div></div>
+    </section>
+
+    <section id="goals" class="page">
+      <div class="section-title"><div><p class="eyebrow">Bonus část</p><h1>Finanční cíle</h1><p>Ukázka dalších elementů, karet a progress barů.</p></div></div>
+      <div class="row g-4" id="goalsGrid"></div>
+    </section>
+
+    <section id="analytics" class="page">
+      <div class="section-title"><div><p class="eyebrow">Charts & desktop feel</p><h1>Analytika</h1><p>Interaktivní grafy pro prezentaci projektu.</p></div></div>
+      <div class="row g-4">
+        <div class="col-12 col-xl-7"><div class="app-card"><div class="card-header-clean"><div><h2>Příjmy vs výdaje</h2><p>Souhrn aktuální banky</p></div></div><canvas id="cashChart" height="150"></canvas></div></div>
+        <div class="col-12 col-xl-5"><div class="app-card"><div class="card-header-clean"><div><h2>Stavy studentů</h2><p>Rozdělení databáze</p></div></div><canvas id="studentChart" height="210"></canvas></div></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="txnModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><form class="modal-content" id="txnForm"><div class="modal-header"><h5 class="modal-title" id="txnModalTitle">Transakce</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="txnId"><div class="row g-3"><div class="col-6"><label class="form-label">Typ</label><select id="txnType" class="form-select" required><option value="expense">Výdaj</option><option value="income">Příjem</option></select></div><div class="col-6"><label class="form-label">Částka Kč</label><input id="txnAmount" type="number" min="1" class="form-control" required></div><div class="col-6"><label class="form-label">Kategorie</label><select id="txnCategory" class="form-select" required></select></div><div class="col-6"><label class="form-label">Datum</label><input id="txnDate" type="date" class="form-control" required></div><div class="col-12"><label class="form-label">Popis</label><input id="txnDesc" class="form-control" maxlength="80" required></div></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Zrušit</button><button class="btn btn-primary" type="submit"><i class="bi bi-save"></i> Uložit</button></div></form></div></div>
+
+  <div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><form class="modal-content" id="studentForm"><div class="modal-header"><h5 class="modal-title" id="studentModalTitle">Student</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="studentId"><div class="row g-3"><div class="col-md-6"><label class="form-label">First name *</label><input id="firstName" class="form-control" required></div><div class="col-md-6"><label class="form-label">Last name *</label><input id="lastName" class="form-control" required></div><div class="col-md-4"><label class="form-label">Age *</label><input id="age" type="number" min="16" max="80" class="form-control" required></div><div class="col-md-8"><label class="form-label">Email</label><input id="email" type="email" class="form-control"></div><div class="col-md-6"><label class="form-label">Faculty *</label><select id="faculty" class="form-select" required><option>FIT - Faculty of Information Technology</option><option>FEI - Faculty of Electrical Engineering</option><option>FST - Faculty of Mechanical Engineering</option><option>FEK - Faculty of Economics</option><option>FAI - Faculty of Applied Informatics</option></select></div><div class="col-md-6"><label class="form-label">Specialty *</label><input id="specialty" class="form-control" required></div><div class="col-md-6"><label class="form-label">GPA</label><input id="gpa" type="number" min="0" max="4" step="0.1" class="form-control" required></div><div class="col-md-6"><label class="form-label">Status</label><select id="studentStatus" class="form-select"><option>Active</option><option>Graduated</option><option>Suspended</option></select></div></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" type="submit"><i class="bi bi-save"></i> Save</button></div></form></div></div>
+
+  <div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content about-card"><div class="modal-header border-0"><h5 class="modal-title">O autorovi</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-center"><div class="avatar mx-auto mb-3">NC</div><h3>Nikita Chervinskyi</h3><p class="text-muted mb-1">    CHE0086    </p><p>Bootstrap projekt vytvořený jako spojení Python Smart Budget a Qt Student Manager.</p><div class="d-flex justify-content-center gap-2 flex-wrap"><span class="badge rounded-pill text-bg-primary">Bootstrap 5</span><span class="badge rounded-pill text-bg-success">CRUD</span><span class="badge rounded-pill text-bg-warning">LocalStorage</span><span class="badge rounded-pill text-bg-info">Responsive UI</span><span class="badge rounded-pill text-bg-dark">Electron</span><span class="badge rounded-pill text-bg-secondary">Chart.js</span></div></div></div></div></div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3"><div id="appToast" class="toast" role="alert"><div class="toast-header"><i class="bi bi-check-circle-fill text-success me-2"></i><strong class="me-auto">UniBudget Pro</strong><button type="button" class="btn-close" data-bs-dismiss="toast"></button></div><div class="toast-body" id="toastText">Hotovo.</div></div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
